@@ -1,0 +1,188 @@
+<html>
+	<head>
+		<script src="scripts/jquery-1.10.2.js"></script>
+		<script src="scripts/jquery-ui.js"></script>
+		<script src="scripts/jquery.appendGrid-1.5.2.js"></script>
+
+		<link href="styles/jquery.appendGrid-1.5.2.css" rel="stylesheet" type="text/css">
+		<link href="styles/jquery-ui.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="ng.css" type="text/css" />
+
+		<script>
+			
+			$(document).ready(function() {
+				console.log('document load');
+				// TO DO: need to load data if it exists
+				$.ajax({
+					type: 'GET',
+					url: 'get_prize_triggers.php',
+					success: function(msg) {
+						prePopulateTriggerLevels(msg);
+					}
+				});
+				
+				$.ajax({
+					type: 'GET',
+					url: 'get_config_values.php',
+					success: function(msg) {
+						prePopulateConfigValues(msg);
+					}
+				});
+				
+				$("#btnSave").click(function() {
+					// first save the trigger levels and descriptions, unconditionally
+					var entries = new Array();
+					var entry;
+					for (var i=1;; i++) {
+						levelId = "#tblAppendGrid_TriggerLevel_" + i;
+						descriptionId = "#tblAppendGrid_PrizeDescription_" + i;
+						if ($(levelId).length) {
+							entry = new Object();
+							entry.TriggerLevel = $(levelId).val();
+							entry.PrizeDescription = $(descriptionId).val();
+							entries.push(entry);
+						} else {
+							break;
+						}
+					}  
+					
+					var json = JSON.stringify(entries);
+
+					$.ajax({
+						type: 'POST',
+						url: 'save_prize_triggers.php',
+						data: {'entries': json},
+						success: function(msg) {
+							$("#lblMessage").html("Save completed");
+						}
+					});					
+				});
+				
+				$("#btnReinitializeTweetLog").click(function() {
+					$.ajax({
+						type: 'GET',
+						url: 'remove_tweets_from_db.php',
+						success: function(msg) {
+						}
+					});					
+				});
+				
+				$("#btnSaveSearchTags").click(function() {
+					// save the search tags to be used for streaming API listener
+					var configs = new Array();
+					var config;
+
+					config = new Object();				
+					config.ConfigKey = 'SearchTags';
+					config.ConfigValue = $("#txtSearchTags").val();
+					configs.push(config);
+					
+					var json = JSON.stringify(configs);
+					$.ajax({
+						type: 'POST',
+						url: 'save_searchtags.php',
+						data: {'configs': json},
+						success: function(msg) {
+							$("#lblSearchTagsMessage").html("Save completed");
+						},
+						error: function(msg) {	
+							console.log('search tag save error');
+						}
+					});
+				});
+				
+				$("#btnSaveTweetCount").click(function() {
+					// bump total entry count in tweets table to number specified
+					var configs = new Array();
+					var config;
+
+					config = new Object();
+					config.ConfigKey = 'TweetCount';
+					config.ConfigValue = $("#txtTweetCount").val();
+					configs.push(config);
+					
+					var json = JSON.stringify(configs);
+					$.ajax({
+						type: 'POST',
+						url: 'save_tweet_count.php',
+						data: {'configs': json},
+						success: function(msg) {
+							$("#lblTweetCountMessage").html("Save completed");
+						}
+					});
+				});
+				
+				function prePopulateTriggerLevels(msg) {
+					var triggerLevels = msg;
+					$('#tblAppendGrid').appendGrid({
+						caption: 'Tweet Prize Trigger Points',
+						initRows: 1,
+						initData: triggerLevels,
+						columns: [
+						{ name: 'TriggerLevel', display: 'Trigger Level', type: 'text', ctrlAttr: { maxlength: 10 }, ctrlCss: { width: '60px'} },
+						{ name: 'PrizeDescription', display: 'Prize Description', type: 'text', ctrlAttr: { maxlength: 128 }, ctrlCss: { width: '400px'} },
+						]
+					});				
+				}
+				
+				function prePopulateConfigValues(msg) {
+					$configEntries = msg;
+					$("#txt" + $configEntries[0].ConfigKey).val($configEntries[0].ConfigValue);
+					$("#txt" + $configEntries[1].ConfigKey).val($configEntries[1].ConfigValue);
+				}
+			});
+		</script>
+	</head>
+	<body>
+		<table width="100%">
+			<tr>
+				<td align="center">
+					<h2>Negra Modelo Twitter Promotion - Admin</h2>
+					<input type="button" class="button" id="btnReinitializeTweetLog" value="Reset Tweet Count to Zero"/>
+					<div id="lblReinitializationMessage" style="width: 150px; height: 20px; color: white"></div>
+
+					<p></p>
+					<p>&nbsp;</p>
+					<fieldset style="width: 70%">
+						<legend>Configuration Values</legend>
+						<table>
+							<tr>
+								<td class="label">Search Tags:</td>
+								<td>
+									<input type="text" width="50" id="txtSearchTags">&nbsp;	
+									<input type="button" class="button" id="btnSaveSearchTags" value="Save"/>							
+									<div id="lblSearchTagsMessage" style="width: 150px; height: 20px; color: white"></div>
+								</td>
+							</tr>
+							<tr>
+								<td class="label">Tweet Count:</td>
+								<td>
+									<input type="text" width="50" id="txtTweetCount"/>&nbsp;							
+									<input type="button" class="button" id="btnSaveTweetCount" value="Save"/>&nbsp;
+									<div id="lblTweetCountMessage" style="width: 150px; height: 20px; color: white"></div>
+								</td>
+								
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+							</tr>
+						</table>
+					</fieldset>
+					<p></p>
+					<fieldset style="width: 70%">
+						<legend>Trigger Levels</legend>
+						<table id="tblAppendGrid">
+							</table>
+							<p></p>
+							<input type="button" class="button" id="btnSave" value="Save Changes"/>
+							<p></p>
+							<div id="lblMessage" style="width: 300px; height: 20px; color: white"></div>
+						</table>
+					</fieldset>
+				</td>
+			</tr>
+		</table>
+		<input type="hidden" id="txtTweetCountOffset"/>
+	</body>
+</html>

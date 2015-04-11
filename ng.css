@@ -1,0 +1,234 @@
+body
+{
+margin: 0px;
+padding: 0px;
+background-image: url(../images/background.jpg);
+-moz-background-size: cover;
+-webkit-background-size: cover;
+background-size: cover;
+background-position: top center !important;
+background-repeat: no-repeat !important;
+background-attachment: fixed;
+}
+
+.profileImage
+{
+display: inline-block;
+vertical-align: top;
+width: 60px;
+}
+
+.tweetContent
+{
+display: inline-block;
+vertical-align: top;
+color: white;
+width: 250px;
+font-size: 15px;
+}
+
+.tweetHeading
+{
+font-family: Helvetica Neue Bold;
+color: white;
+font-size: x-small;
+font-size: 15px;
+}
+
+.tweetText
+{
+font-family: Helvetica Neue;
+font-size: 15px;
+}
+
+#tweetHighlight
+{
+font-family: 'Helvetica Neue';
+color: #FDB913; 
+font-size: 32pt;
+}
+
+.pageHeading
+{
+font-family: Helvetica Neue;
+font-size: 32pt;
+}
+
+.panel
+{
+display: inline-block;
+vertical-align: middle;
+}
+
+#prizeLine
+{
+font-family: Helvetica Neue;
+border-radius: 8px;
+margin-left: 50px;
+height: 30px;
+vertical-align: middle;
+opacity: .20;
+}
+
+.prizePanel
+{
+font-family: Helvetica Neue;
+font-size: x-large;
+display: inline-block;
+vertical-align: middle;
+width: 208px;
+text-align: right;
+line-height: 27px;
+float: left;
+height: 25px;
+color: white;
+padding-right: 5px;
+padding-top: 3px;
+border-right: solid 1px #A0A0A0;
+}
+
+.prizeDescription
+{
+font-family: Helvetica Neue;
+font-size: 14pt;
+display: inline-block;
+vertical-align: center;
+width: 137px;
+text-align: center;
+float: left;
+height: 60px;
+color: white;
+padding-left: 75px;
+}
+
+.prizeLineBackground
+{
+
+}
+
+#completedTweets
+{
+height: 25px;
+display: inline-block;
+float: left;
+vertical-align: top;
+border-top: solid 1px gray;
+border-bottom: solid 1px gray;
+border-radius: 5px 0px 0px 5px;
+background-color: #FDB913;
+border-left: solid 1px gray;
+border-top: solid 1px gray;
+border-bottom: solid 1px gray;
+}
+
+#remainingTweets
+{	
+height: 25px;
+display: inline-block;
+float: left;
+vertical-align: top;
+border-top: solid 1px gray;
+border-bottom: solid 1px gray;		
+border-radius: 0px 5px 5px 0px;	
+background-color: #1B2B51;
+border-right: solid 1px gray;
+border-top: solid 1px gray;
+border-bottom: solid 1px gray;
+}
+
+#tweetCount{
+
+font-size: 198pt;
+font-family: 'Helvetica Neue';
+width: 550px;
+display: inline-block;
+vertical-align: top;
+}
+
+#tweets
+{
+padding: 5px;
+width: 340px; 
+height: 250px; 
+overflow-y: hidden;
+overflow-x: hidden;
+display: inline-block;
+}
+
+.tweet
+{
+padding-bottom: 10px;
+color: white;
+}
+
+#newTweets
+{
+}
+
+#oldTweets
+{
+}
+
+.link
+{
+color: blue;
+text-decoration: underline;
+display: inline-block;
+}
+
+.label
+{
+color: white;
+}
+
+#progressMarker
+{
+position: absolute;
+width: 30px;
+}
+
+.ovalImage
+{
+width: 45px;
+border-radius: 20px;
+}
+
+.button { 
+	background-color: #FDB913; 
+	border-radius: 5px; 
+	color: white; 
+	font-size: x-large; 
+	background-color: gray;
+}	
+.label
+{
+color: white;
+font-family: 'Helvetica Neue';
+font-size: x-large;
+}	
+input
+{
+font-family: 'Helvetica Neue';
+font-size: x-large;
+}
+h2
+{
+color: white;
+}	
+legend
+{
+font-family: 'Helvetica Neue';
+font-size: x-large;
+color: white;
+}
+@font-face { 			
+font-family: 'Helvetica Neue Bold'; src: url('fonts/HelveticaNeueLTPro Md.otf'); 
+}
+
+@font-face { 
+font-family: 'Helvetica Neue'; src: url('fonts/HelveticaNeueLTPro Cn.otf'); 
+}
+
+
+
+
